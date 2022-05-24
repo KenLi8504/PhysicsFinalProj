@@ -6,6 +6,7 @@ ArrayList<planets> pArray;
 planets current;
 
 void setup() {
+  textSize(20);
   size(1000,800);
   loadbg();
   planetimg = loadImage("planet.png");
@@ -18,6 +19,7 @@ void draw() {
   placePlanet();
   for(planets x: pArray){
     image(x.getImage(),x.getX(),x.getY());
+    text("Mass: " + x.getMass(), x.getX(),x.getY());
   }
   if(heldDown){
     if(current != null){
