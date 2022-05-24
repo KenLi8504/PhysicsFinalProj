@@ -31,8 +31,9 @@ void draw() {
     if(current != null){
       current.updateCoordinate(mouseX,mouseY);
     } 
-  }else{
-    
+  }
+  if(keyPressed && key == 'k' && current != null && pArray.contains(current)){
+    pArray.remove(pArray.indexOf(current));
   }
 }
 
