@@ -1,8 +1,14 @@
-PImage img;
+PImage planet;
+PImage ship;
+PImage goal;
+boolean heldDown;
+
 
 void setup() {
   size(1000,800);
   loadbg();
+  planet = loadImage("planet.png");
+  planet.resize(100,100);
 }
 
 void draw() {
@@ -13,10 +19,11 @@ void loadbg(){
   background(0);
 }
 void placePlanet(){
-  if(mousePressed == true){
-    img = loadImage("planet.jpg");
-    img.resize(100,100);
-    image(img,mouseX,mouseY);
+  if(mousePressed && !heldDown){
+    image(planet,mouseX,mouseY);
     print("placed planet\n");
+    heldDown = true;
+  }else if (!mousePressed){
+    heldDown = false;
   }
 }
