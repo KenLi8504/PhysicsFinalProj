@@ -18,15 +18,21 @@ void draw() {
   loadbg();
   placePlanet();
   for(planets x: pArray){
+    if(current != null && x == current){
+      tint(0, 153, 204);
+    }else{
+      noTint();
+    }
     image(x.getImage(),x.getX(),x.getY());
     text("Mass: " + x.getMass(), x.getX(),x.getY());
   }
+  
   if(heldDown){
     if(current != null){
       current.updateCoordinate(mouseX,mouseY);
     } 
   }else{
-    current = null;
+    
   }
 }
 
