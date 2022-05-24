@@ -31,11 +31,26 @@ void draw() {
 void loadbg(){
   background(0);
 }
+
+boolean hoverCheck(){
+  boolean x = false;
+  current = null;
+  for (planets i: pArray){
+    if (i.held(mouseX, mouseY)){
+      current = i;
+      x = true;
+    }
+  }
+  return x;
+}
+
 void placePlanet(){
   if(mousePressed && !heldDown){
-    pArray.add(new planets(planetimg, mouseX, mouseY));
-    current = pArray.get(pArray.size()-1);
-    print("placed planet\n");
+    if(!hoverCheck()){
+      pArray.add(new planets(planetimg, mouseX, mouseY));
+      current = pArray.get(pArray.size()-1);
+      print("placed planet\n");
+    }
     heldDown = true;
   }else if (!mousePressed){
     heldDown = false;
