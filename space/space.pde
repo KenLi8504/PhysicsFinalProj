@@ -33,7 +33,7 @@ void loadbg(){
 }
 void placePlanet(){
   if(mousePressed && !heldDown){
-    pArray.add(new planets(planetimg));
+    pArray.add(new planets(planetimg, mouseX, mouseY));
     current = pArray.get(pArray.size()-1);
     print("placed planet\n");
     heldDown = true;

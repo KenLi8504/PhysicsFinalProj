@@ -8,16 +8,18 @@ public class planets{
   long mass;
   PImage sprite;
   
-  public planets(PImage shape){
-    xCor = 0;
-    yCor = 0;
+  public planets(PImage shape, int x, int y){
     mass = 100;
+    radius = 50;
+    xCor = x - radius;
+    yCor = y - radius;
     sprite = shape;
+    sprite.resize(radius * 2, radius * 2);
   }
   
   public void updateCoordinate(int x, int y){
-    xCor = x;
-    yCor = y;
+    xCor = x - radius;
+    yCor = y - radius;
   }
   
   public float getX(){
