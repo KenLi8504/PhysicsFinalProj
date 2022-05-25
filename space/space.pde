@@ -55,7 +55,7 @@ boolean hoverCheck(){
 
 void placePlanet(){
   
-  if(mousePressed && !heldDown){
+  if(mousePressed && mouseButton == LEFT && !heldDown){
     if(!hoverCheck()){
       pArray.add(new planets(planetimg, mouseX, mouseY));
       current = pArray.get(pArray.size()-1);
@@ -67,10 +67,9 @@ void placePlanet(){
     heldDown = false;
   }
   if(mousePressed && mouseButton == RIGHT){
-    img = loadImage("rocket.png");
-    tint(255,222);
-    img.resize(30,40);
-    image(img,mouseX,mouseY);
+    ship = loadImage("rocket.png");
+    ship.resize(30,40);
+    image(ship,mouseX,mouseY);
     print("placed rocket\n");
   }
 }
