@@ -42,9 +42,3 @@ public class planets{
     return radius;
   }
 }
-
-public class projectile{
-  long xVelocity;
-  long yVelocity;
-  int angle;
-}
