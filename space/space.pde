@@ -8,15 +8,18 @@ planets current;
 void setup() {
   textSize(20);
   size(1000,800);
-  loadbg();
+  background(0);
   planetimg = loadImage("planet.png");
   planetimg.resize(100,100);
   pArray = new ArrayList<planets>();
 }
 
 void draw() {
-  loadbg();
+  background(0);
   placePlanet();
+  text("left click to place planet", 0,50);
+  text("press k to kill selected planet", 0, 75);
+  
   for(planets x: pArray){
     if(current != null && x == current){
       tint(0, 153, 204);
@@ -37,9 +40,6 @@ void draw() {
   }
 }
 
-void loadbg(){
-  background(0);
-}
 
 boolean hoverCheck(){
   boolean x = false;
