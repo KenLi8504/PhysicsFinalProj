@@ -6,6 +6,7 @@ ArrayList<planets> pArray;
 planets current;
 
 void setup() {
+  textSize(20);
   size(1000,800);
   loadbg();
   planetimg = loadImage("planet.png");
@@ -17,27 +18,50 @@ void draw() {
   loadbg();
   placePlanet();
   for(planets x: pArray){
+    if(current != null && x == current){
+      tint(0, 153, 204);
+    }else{
+      noTint();
+    }
     image(x.getImage(),x.getX(),x.getY());
+    text("Mass: " + x.getMass(), x.getX(),x.getY());
   }
+  
   if(heldDown){
     if(current != null){
       current.updateCoordinate(mouseX,mouseY);
     } 
-  }else{
-    current = null;
+  }
+  if(keyPressed && key == 'k' && current != null && pArray.contains(current)){
+    pArray.remove(pArray.indexOf(current));
   }
 }
 
 void loadbg(){
   background(0);
 }
+
+boolean hoverCheck(){
+  boolean x = false;
+  current = null;
+  for (planets i: pArray){
+    if (i.held(mouseX, mouseY)){
+      current = i;
+      x = true;
+    }
+  }
+  return x;
+}
+
 void placePlanet(){
   
   if(mousePressed && !heldDown){
-    pArray.add(new planets(planetimg, mouseX, mouseY));
-    current = pArray.get(pArray.size()-1);
+    if(!hoverCheck()){
+      pArray.add(new planets(planetimg, mouseX, mouseY));
+      current = pArray.get(pArray.size()-1);
+      print("placed planet\n");
+    }
 
-    print("placed planet\n");
     heldDown = true;
   }else if (!mousePressed){
     heldDown = false;

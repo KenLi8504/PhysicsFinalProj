@@ -2,13 +2,13 @@ public class planets{
   int radius;
   
   //COM Coordinates
-  int xCor;
-  int yCor;
+  float xCor;
+  float yCor;
   
-  long mass;
+  int mass;
   PImage sprite;
   
-  public planets(PImage shape, int x, int y){
+  public planets(PImage shape, float x, float y){
     mass = 100;
     radius = 50;
     xCor = x - radius;
@@ -17,7 +17,7 @@ public class planets{
     sprite.resize(radius * 2, radius * 2);
   }
   
-  public void updateCoordinate(int x, int y){
+  public void updateCoordinate(float x, float y){
     xCor = x - radius;
     yCor = y - radius;
   }
@@ -30,5 +30,15 @@ public class planets{
   }
   public PImage getImage(){
     return sprite;
+  }
+  public boolean held(float x, float y){
+    return (Math.sqrt(Math.pow(xCor - x + radius, 2) + Math.pow(yCor - y + radius, 2)) <= radius);
+  }
+  public int getMass(){
+    return mass;
+  }
+  
+  public int getRadius(){
+    return radius;
   }
 }
