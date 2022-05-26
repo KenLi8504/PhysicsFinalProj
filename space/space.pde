@@ -1,5 +1,6 @@
 PImage planetimg;
 PImage ship;
+projectile rocketship;
 PImage goal;
 boolean heldDown;
 ArrayList<planets> pArray;
@@ -11,6 +12,8 @@ void setup() {
   loadbg();
   planetimg = loadImage("planet.png");
   planetimg.resize(100,100);
+  ship = loadImage("rocket.png");
+  ship.resize(30,40);
   pArray = new ArrayList<planets>();
 }
 
@@ -25,6 +28,9 @@ void draw() {
     }
     image(x.getImage(),x.getX(),x.getY());
     text("Mass: " + x.getMass(), x.getX(),x.getY());
+  }
+  if (rocketship != null){
+    image(rocketship.getImage(),rocketship.getX(),rocketship.getY());
   }
   
   if(heldDown){
@@ -67,9 +73,7 @@ void placePlanet(){
     heldDown = false;
   }
   if(mousePressed && mouseButton == RIGHT){
-    ship = loadImage("rocket.png");
-    ship.resize(30,40);
-    image(ship,mouseX,mouseY);
+    rocketship = new projectile(ship,mouseX,mouseY);
     print("placed rocket\n");
   }
 }
