@@ -23,7 +23,7 @@ void setup() {
   planetImg = loadImage("planet.png");
   planetImg.resize(100,100);
   ship = loadImage("rocket.png");
-  ship.resize(30,40);
+  ship.resize(50,50);
 
   background(0);
   planetImg = loadImage("planet.png");
