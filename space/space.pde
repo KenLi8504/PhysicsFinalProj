@@ -39,7 +39,7 @@ void draw() {
     }
     image(x.getImage(),x.getX(),x.getY());
 
-    text("Mass: " + x.getMass(), x.getX(),x.getY());
+    text("Mass: " + x.getMass() + "x 10^20 kg", x.getX(),x.getY());
   }
   
   if(heldDown){
