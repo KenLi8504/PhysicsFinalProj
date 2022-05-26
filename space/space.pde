@@ -13,6 +13,7 @@ boolean win = false;
 boolean shipHeld = false;
 boolean goalHeld = false;
 
+float GravitationalConstant = 6.6743e-11;
 
 
 void setup() {
@@ -73,9 +74,20 @@ void draw() {
 
     text("Mass: " + x.getMass() + "x 10^20 kg", x.getX(),x.getY());
   }
+  
+  //Rocket stuff
   if (rocketship != null){
+    //Loads the rocket
     image(rocketship.getImage(),rocketship.getX(),rocketship.getY());
+    //Deals with the change in position
+    rocketship.xPosition = rocketship.xPosition + rocketship.getXVelocity();
+    rocketship.yPosition = rocketship.yPosition + rocketship.getYVelocity();
+    print(rocketship.getX());
+    print(rocketship.getY());
+    //Deals with the change in velocity due to gravitational acceleration at each moment
+  
   }
+  
   
   if(heldDown){
     if(current != null){

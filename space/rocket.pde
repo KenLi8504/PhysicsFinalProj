@@ -1,25 +1,35 @@
 public class projectile{
-  long xVelocity;
-  long yVelocity;
-  int xPosition;
-  int yPosition;
-  int angle;
+  float xVelocity;
+  float yVelocity;
+  float xPosition;
+  float yPosition;
+  float angle;
   PImage sprite;
   
   
-  public projectile(PImage shape, int x, int y){
+  public projectile(PImage shape, float x, float y){
     sprite = shape;
     sprite.resize(30,40);
     xPosition = x;
     yPosition = y;
+    xVelocity = 10;
+    yVelocity = 10;
   }
   
-  public int getX(){
+  public float getX(){
     return xPosition;
   }
   
-  public int getY(){
+  public float getY(){
     return yPosition;
+  }
+  
+  public float getXVelocity(){
+    return xVelocity;
+  }
+  
+  public float getYVelocity(){
+    return yVelocity;
   }
   
   public PImage getImage(){
