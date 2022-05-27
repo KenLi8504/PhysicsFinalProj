@@ -5,11 +5,11 @@ public class planets{
   float xCor;
   float yCor;
   
-  int mass;
+  float mass;
   PImage sprite;
   
   public planets(PImage shape, float x, float y){
-    mass = 100;
+    mass = 100 * (float)Math.pow(10,20);
     radius = 50;
     xCor = x - radius;
     yCor = y - radius;
@@ -34,7 +34,7 @@ public class planets{
   public boolean held(float x, float y){
     return (Math.sqrt(Math.pow(xCor - x + radius, 2) + Math.pow(yCor - y + radius, 2)) <= radius);
   }
-  public int getMass(){
+  public float getMass(){
     return mass;
   }
   
