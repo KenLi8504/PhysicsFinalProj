@@ -53,7 +53,7 @@ float[] forceCalc(planets a, float x, float y){
   float distance = distanceCalc(a,x,y);
   float xDist = a.getX() - x + a.getRadius();  
   float yDist = a.getY() - y + a.getRadius();  
-  float force = a.getMass() * (float)Math.pow(10,20) * GConstant / (float)Math.pow(distance, 2);
+  float force = a.getMass() * GConstant / (float)Math.pow(distance, 2);
   float[] finale = {force * Math.abs(xDist) / distance, force * Math.abs(yDist) / distance};
   if(a.getX() + a.getRadius() < x){
     finale[0] *= -1;
@@ -120,7 +120,7 @@ void draw() {
     }
     image(x.getImage(),x.getX(),x.getY());
 
-    text("Mass: " + x.getMass() + "x 10^20 kg", x.getX(),x.getY());
+    text("Mass: " + x.getMass(), x.getX(),x.getY());
   }
   noTint();
   //Rocket stuff
