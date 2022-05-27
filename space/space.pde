@@ -107,6 +107,7 @@ void draw() {
   }
   placePlanet();
   image(goalImg, target.getX(),target.getY());
+  fill(color(255,0,0));
   text("left click to place planet", 0,50);
   text("press k to kill selected planet", 0, 75);
   text("press space to start", 0, 100);
