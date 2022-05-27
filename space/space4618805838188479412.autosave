@@ -13,8 +13,6 @@ boolean win = false;
 boolean shipHeld = false;
 boolean goalHeld = false;
 
-float GConstant = 6.6743e-11;
-
 
 void setup() {
   textSize(20);
@@ -39,31 +37,18 @@ void setup() {
 float distanceCalc(planets a, float x, float y){
   float xCor = a.getX();
   float yCor = a.getY();
-  float xDist = xCor - x + a.getRadius();
-  float yDist = yCor - x + a.getRadius();
+  float xDist = xCor - x;
+  float yDist = yCor - x;
   return (float)Math.sqrt(xDist * xDist + yDist * yDist);
 }
 
-float[] forceCalc(planets a, float x, float y){
-  float distance = distanceCalc(a,x,y);
-  float yDist = a.getY() - x + a.getRadius();  
-  float force = a.getMass() * (float)Math.pow(10,20) * GConstant / (float)Math.pow(distance, 2);
-  float[] finale = {force * (float)Math.acos(yDist / force), force * (float)Math.asin(yDist / force)};
-  //LOOK AT THIS CODE CLOSER AT HOME - MAKE SURE THIS FUNCTIONS
-  return finale;
-}
 
 void fieldDrawer(){
-  float[] maxForce = {0,0};
-  for(int i = 0; i < 1000; i +=4){
+  for(int i = 0; i <= 1000; i +=4){
     for(int j = 0; j < 800; j +=4){
-      maxForce[0] = 0;
-      maxForce[1] = 0;
-      for (planets k: pArray){
-        maxForce[0] += forceCalc(k, mouseX, mouseY)[0];
-        maxForce[1] += forceCalc(k, mouseX, mouseY)[1];
+      for(planets k: pArray){
+        
       }
-      
     }
   }
 }
@@ -89,22 +74,9 @@ void draw() {
 
     text("Mass: " + x.getMass() + "x 10^20 kg", x.getX(),x.getY());
   }
-  
-  //Rocket stuff
   if (rocketship != null){
-    //Loads the rocket
     image(rocketship.getImage(),rocketship.getX(),rocketship.getY());
-    //Deals with the change in position
-    rocketship.xPosition = rocketship.xPosition + rocketship.getXVelocity();
-    rocketship.yPosition = rocketship.yPosition + rocketship.getYVelocity();
-    print(rocketship.getX());
-    print(rocketship.getY());
-    //Deals with the change in velocity due to gravitational acceleration at each moment
-    for(planets x: pArray){
-      // puint acceleration = x.getMass()*G/
-    }
   }
-  
   
   if(heldDown){
     if(current != null){
