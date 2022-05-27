@@ -85,7 +85,9 @@ void draw() {
     print(rocketship.getX());
     print(rocketship.getY());
     //Deals with the change in velocity due to gravitational acceleration at each moment
-  
+    for(planets x: pArray){
+      // puint acceleration = x.getMass()*G/
+    }
   }
   
   
