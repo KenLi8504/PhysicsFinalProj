@@ -63,7 +63,11 @@ void fieldDrawer(){
         maxForce[0] += forceCalc(k, mouseX, mouseY)[0];
         maxForce[1] += forceCalc(k, mouseX, mouseY)[1];
       }
-      
+      float bright = 255 * (float)Math.sqrt(Math.pow(maxForce[0],2) + Math.pow(maxForce[1],2)) / 100000000;
+      color c = color(bright,bright,bright);
+      stroke(c);
+      fill(c);
+      square(i,j,4);
     }
   }
 }
@@ -72,6 +76,7 @@ void fieldDrawer(){
 
 void draw() {
   background(0);
+  fieldDrawer();
   placePlanet();
   image(goalImg, target.getX(),target.getY());
   text("left click to place planet", 0,50);
