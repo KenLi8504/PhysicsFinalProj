@@ -40,15 +40,22 @@ float distanceCalc(planets a, float x, float y){
   float xCor = a.getX();
   float yCor = a.getY();
   float xDist = xCor - x + a.getRadius();
-  float yDist = yCor - x + a.getRadius();
+  float yDist = yCor - y + a.getRadius();
   return (float)Math.sqrt(xDist * xDist + yDist * yDist);
 }
 
 float[] forceCalc(planets a, float x, float y){
   float distance = distanceCalc(a,x,y);
-  float yDist = a.getY() - x + a.getRadius();  
+  float xDist = a.getX() - x + a.getRadius();  
+  float yDist = a.getY() - y + a.getRadius();  
   float force = a.getMass() * (float)Math.pow(10,20) * GConstant / (float)Math.pow(distance, 2);
-  float[] finale = {force * (float)Math.acos(yDist / force), force * (float)Math.asin(yDist / force)};
+  float[] finale = {force * Math.abs(xDist) / distance, force * Math.abs(yDist) / distance};
+  if(a.getX() + a.getRadius() < x){
+    finale[0] *= -1;
+  }
+  if(a.getY() + a.getRadius() < y){
+    finale[1] *= -1;
+  }
   //LOOK AT THIS CODE CLOSER AT HOME - MAKE SURE THIS FUNCTIONS
   return finale;
 }
@@ -60,10 +67,10 @@ void fieldDrawer(){
       maxForce[0] = 0;
       maxForce[1] = 0;
       for (planets k: pArray){
-        maxForce[0] += forceCalc(k, mouseX, mouseY)[0];
-        maxForce[1] += forceCalc(k, mouseX, mouseY)[1];
+        maxForce[0] += forceCalc(k, i, j)[0];
+        maxForce[1] += forceCalc(k, i, j)[1];
       }
-      float bright = 255 * (float)Math.sqrt(Math.pow(maxForce[0],2) + Math.pow(maxForce[1],2)) / 100000000;
+      float bright = 200 * (float)Math.sqrt(Math.pow(maxForce[0],2) + Math.pow(maxForce[1],2)) / 60000000;
       color c = color(bright,bright,bright);
       stroke(c);
       fill(c);
