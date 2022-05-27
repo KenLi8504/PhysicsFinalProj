@@ -16,6 +16,10 @@ boolean goalHeld = false;
 float GConstant = 6.6743e-11;
 
 
+float[][][] currentForce= new float[250][200][2];
+
+boolean changed = false;
+
 void setup() {
   textSize(20);
   size(1000,800);
@@ -34,6 +38,7 @@ void setup() {
   ship = loadImage("rocket.png");
   ship.resize(30,40);
   pArray = new ArrayList<planets>();
+  fieldDrawer(true);
 }
 
 float distanceCalc(planets a, float x, float y){
@@ -60,16 +65,24 @@ float[] forceCalc(planets a, float x, float y){
   return finale;
 }
 
-void fieldDrawer(){
+void fieldDrawer(boolean changed){
   float[] maxForce = {0,0};
   for(int i = 0; i < 1000; i +=4){
     for(int j = 0; j < 800; j +=4){
-      maxForce[0] = 0;
-      maxForce[1] = 0;
-      for (planets k: pArray){
-        maxForce[0] += forceCalc(k, i, j)[0];
-        maxForce[1] += forceCalc(k, i, j)[1];
+      if(changed || pArray.size() == 0){
+        maxForce[0] = 0;
+        maxForce[1] = 0;
+        for (planets k: pArray){
+          maxForce[0] += forceCalc(k, i, j)[0];
+          maxForce[1] += forceCalc(k, i, j)[1];
+          currentForce[i / 4][j / 4][0] = maxForce[0];
+          currentForce[i / 4][j / 4][1] = maxForce[1];
+        }
+      }else{
+        maxForce[0] = currentForce[i / 4][j / 4][0];
+        maxForce[1] = currentForce[i / 4][j / 4][1];
       }
+      
       float bright = 200 * (float)Math.sqrt(Math.pow(maxForce[0],2) + Math.pow(maxForce[1],2)) / 60000000;
       color c = color(bright,bright,bright);
       stroke(c);
@@ -83,7 +96,15 @@ void fieldDrawer(){
 
 void draw() {
   background(0);
-  fieldDrawer();
+  if(heldDown){
+    if(current != null && (current.getX() + current.getRadius() != mouseX || current.getY() + current.getRadius() != mouseY)){
+      fieldDrawer(true);
+    }else{
+      fieldDrawer(false);
+    }
+  }else{
+    fieldDrawer(false);
+  }
   placePlanet();
   image(goalImg, target.getX(),target.getY());
   text("left click to place planet", 0,50);
@@ -101,7 +122,7 @@ void draw() {
 
     text("Mass: " + x.getMass() + "x 10^20 kg", x.getX(),x.getY());
   }
-  
+  noTint();
   //Rocket stuff
   if (rocketship != null){
     //Loads the rocket
@@ -163,6 +184,7 @@ void placePlanet(){
     if(!hoverCheck()){
       pArray.add(new planets(planetImg, mouseX, mouseY));
       current = pArray.get(pArray.size()-1);
+      fieldDrawer(true);
       print("placed planet\n");
     }
 
