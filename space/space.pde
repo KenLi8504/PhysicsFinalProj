@@ -12,6 +12,7 @@ goal target = new goal();
 boolean win = false;
 boolean shipHeld = false;
 boolean goalHeld = false;
+float scaleFac = 2000000;
 
 float GConstant = 6.6743e-11;
 
@@ -113,7 +114,17 @@ void draw() {
     print(rocketship.getY());
     //Deals with the change in velocity due to gravitational acceleration at each moment
     for(planets x: pArray){
-      // puint acceleration = x.getMass()*G/
+      float distance = distanceCalc(x,rocketship.getX(),rocketship.getY());
+      float xDist = rocketship.getX() - x.getX() + x.getRadius();  
+      float yDist = rocketship.getY() - x.getY() + x.getRadius();  
+      float acceleration = x.getMass() * GConstant / (float)Math.pow(distance, 2);
+      
+      float xacceleration = acceleration*xDist/distance/scaleFac;
+      float yacceleration = acceleration*yDist/distance/scaleFac;
+      
+      rocketship.xVelocity = rocketship.xVelocity-xacceleration;
+      rocketship.yVelocity = rocketship.yVelocity-yacceleration;
+      
     }
   }
   
