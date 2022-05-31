@@ -9,7 +9,7 @@ public class goal{
   
   public void updateCoordinate(float x, float y){
     xCor = x - 85;
-    yCor = y - 85;
+    yCor = y - 48;
   }
   
   public float getX(){
