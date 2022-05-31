@@ -36,8 +36,6 @@ void setup() {
   planetImg.resize(100,100);
   goalImg.resize(170,96);
   
-  ship = loadImage("rocket.png");
-  ship.resize(30,40);
   pArray = new ArrayList<planets>();
   fieldDrawer(true);
 }
@@ -137,8 +135,8 @@ void draw() {
     //Deals with the change in velocity due to gravitational acceleration at each moment
     for(planets x: pArray){
       float distance = distanceCalc(x,rocketship.getX(),rocketship.getY());
-      float xDist = rocketship.getX() - x.getX() + x.getRadius();  
-      float yDist = rocketship.getY() - x.getY() + x.getRadius();  
+      float xDist = rocketship.getX() + 25 - x.getX() + x.getRadius();  
+      float yDist = rocketship.getY() + 25 - x.getY() + x.getRadius();  
       float acceleration = x.getMass() * GConstant / (float)Math.pow(distance, 2);
       
       float xacceleration = acceleration*xDist/distance/scaleFac;
