@@ -132,21 +132,26 @@ void draw() {
     //Deals with the change in position
     rocketship.xPosition = rocketship.xPosition + rocketship.getXVelocity();
     rocketship.yPosition = rocketship.yPosition + rocketship.getYVelocity();
-    print(rocketship.getX());
-    print(rocketship.getY());
+    //print(rocketship.getX());
+    //print(rocketship.getY());
     //Deals with the change in velocity due to gravitational acceleration at each moment
     for(planets x: pArray){
-      float distance = distanceCalc(x,rocketship.getX(),rocketship.getY());
-      float xDist = rocketship.getX() - x.getX() + x.getRadius();  
-      float yDist = rocketship.getY() - x.getY() + x.getRadius();  
-      float acceleration = x.getMass() * GConstant / (float)Math.pow(distance, 2);
+      //float distance = distanceCalc(x,rocketship.getX(),rocketship.getY());
+      //float xDist = rocketship.getX() - x.getX() + x.getRadius();  
+      //float yDist = rocketship.getY() - x.getY() + x.getRadius();  
+      //float acceleration = x.getMass() * GConstant / (float)Math.pow(distance, 2);
       
-      float xacceleration = acceleration*xDist/distance/scaleFac;
-      float yacceleration = acceleration*yDist/distance/scaleFac;
+      //float xacceleration = acceleration*xDist/distance/scaleFac;
+      //float yacceleration = acceleration*yDist/distance/scaleFac;
       
-      rocketship.xVelocity = rocketship.xVelocity-xacceleration;
-      rocketship.yVelocity = rocketship.yVelocity-yacceleration;
+      float acceleration [] = forceCalc(x,rocketship.getX(),rocketship.getY());
+      print("The X accel is" + acceleration[0] +"\n");
+      print("The Y accel is" + acceleration[1] +"\n");
       
+      rocketship.xVelocity = rocketship.xVelocity+(acceleration[0]/scaleFac);
+      rocketship.yVelocity = rocketship.yVelocity+(acceleration[1]/scaleFac);
+      //print("The X velocity is" +rocketship.xVelocity +"\n");
+      //print("The Y velocity is" +rocketship.yVelocity +"\n");
     }
   }
   

@@ -12,8 +12,8 @@ public class projectile{
     sprite.resize(30,40);
     xPosition = x;
     yPosition = y;
-    xVelocity = 10;
-    yVelocity = 10;
+    xVelocity = 50;
+    yVelocity = 0;
   }
   
   public float getX(){
