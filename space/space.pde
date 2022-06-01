@@ -4,6 +4,8 @@ PImage ship;
 projectile rocketship;
 PImage goal;
 PImage goalImg;
+PImage winScreen;
+
 
 boolean heldDown;
 ArrayList<planets> pArray;
@@ -25,6 +27,9 @@ void setup() {
   textSize(20);
   size(1000,800);
 
+  winScreen = loadImage("amogus.jpg");
+  winScreen.resize(1000,800);
+ 
   planetImg = loadImage("planet.png");
   planetImg.resize(100,100);
   ship = loadImage("rocket.png");
@@ -36,8 +41,6 @@ void setup() {
   planetImg.resize(100,100);
   goalImg.resize(170,96);
   
-  ship = loadImage("rocket.png");
-  ship.resize(30,40);
   pArray = new ArrayList<planets>();
   fieldDrawer(true);
 }
@@ -96,6 +99,7 @@ void fieldDrawer(boolean changed){
 
 
 void draw() {
+  textSize(20);
   background(0);
   if(heldDown){
     if(current != null && (current.getX() + current.getRadius() != mouseX || current.getY() + current.getRadius() != mouseY)){
@@ -136,11 +140,6 @@ void draw() {
     //print(rocketship.getY());
     //Deals with the change in velocity due to gravitational acceleration at each moment
     for(planets x: pArray){
-      //float distance = distanceCalc(x,rocketship.getX(),rocketship.getY());
-      //float xDist = rocketship.getX() - x.getX() + x.getRadius();  
-      //float yDist = rocketship.getY() - x.getY() + x.getRadius();  
-      //float acceleration = x.getMass() * GConstant / (float)Math.pow(distance, 2);
-      
       //float xacceleration = acceleration*xDist/distance/scaleFac;
       //float yacceleration = acceleration*yDist/distance/scaleFac;
       
@@ -172,8 +171,27 @@ void draw() {
     target.updateCoordinate(300,300);
   }
   noTint();
+  if(rocketship != null){
+    winChecker(target, rocketship);
+  }
+  
+  if(win){
+    textSize(50);
+    image(winScreen,0,0);
+    fill(255,255,255);
+    text("You did it!", 400, 400);  
+  }
 }
 
+void winChecker(goal a, projectile b){
+  for(int i = (int)a.getX() - 85; i < a.getX() + 85; i++){
+    for(int j = (int)a.getY() - 48; i < a.getY() + 48; j++){
+      if(Math.pow(i - b.getX() + 25,2) + Math.pow(j - b.getY() + 25,2) < 25){
+        win = true;
+      }
+    }
+  }
+}
 
 boolean hoverCheck(){
   boolean x = false;

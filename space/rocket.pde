@@ -9,7 +9,6 @@ public class projectile{
   
   public projectile(PImage shape, float x, float y){
     sprite = shape;
-    sprite.resize(30,40);
     xPosition = x;
     yPosition = y;
     xVelocity = 50;
