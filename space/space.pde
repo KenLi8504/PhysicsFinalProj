@@ -24,6 +24,7 @@ float[][][] currentForce= new float[250][200][2];
 boolean changed = false;
 
 void setup() {
+  heldDown = false;
   textSize(20);
   size(1000, 800);
   winScreen = loadImage("amogus.jpg");
@@ -82,7 +83,7 @@ void draw() {
 
   noTint();
 
-  if (heldDown) {
+  if (heldDown && mouseButton == LEFT) {
     if (current != null) {
       current.updateCoordinate(mouseX, mouseY);
     } else if (goalHeld) {
@@ -97,25 +98,29 @@ void draw() {
     pArray.clear();
     win = false;
     target.updateCoordinate(300, 300);
+    rocketship = null;
   }
   noTint();
   if (rocketship != null) {
-    //winChecker(target, rocketship);
+    print("Hehe watch this program crash");
+    winChecker(target, rocketship);
   }
 
   if (win) {
     textSize(50);
     image(winScreen, 0, 0);
     fill(255, 255, 255);
+    rocketship = null;
     text("You did it!", 400, 400);
   }
 }
 
-<<<<<<< HEAD
+
+// check if the rocket is inside the goal
 void winChecker(goal a, projectile b) {
-  for (int i = (int)a.getX() - 85; i < a.getX() + 85; i++) {
-    for (int j = (int)a.getY() - 48; i < a.getY() + 48; j++) {
-      if (Math.pow(i - b.getX() + 25, 2) + Math.pow(j - b.getY() + 25, 2) < 25) {
+  for (int i = (int)a.getX() - 85; i < a.getX() + 85; i+= 2) {
+    for (int j = (int)a.getY() - 48; i < a.getY() + 48; j+= 2) {
+      if (Math.pow(i - (int)b.getX() + 25, 2) + Math.pow(j - (int)b.getY() + 25, 2) < 625) {
         win = true;
         return;
       }
@@ -123,17 +128,7 @@ void winChecker(goal a, projectile b) {
   }
   win = false;
 }
-=======
-//void winChecker(goal a, projectile b) {
-//  for (int i = (int)a.getX() - 85; i < a.getX() + 85; i++) {
-//    for (int j = (int)a.getY() - 48; i < a.getY() + 48; j++) {
-//      if (Math.pow(i - b.getX() + 25, 2) + Math.pow(j - b.getY() + 25, 2) < 25) {
-//        win = true;
-//      }
-//    }
-//  }
-//}
->>>>>>> 40a7d20ffff77e60180f3dc5fcff4aef7c211195
+
 
 void rocketSpawn(projectile rocketship) {
   //Rocket stuff
@@ -211,7 +206,7 @@ void placePlanet() {
     }
     heldDown = true;
   }
-  else if (!mousePressed) {
+  if (!mousePressed) {
     heldDown = false;
   }
 }
