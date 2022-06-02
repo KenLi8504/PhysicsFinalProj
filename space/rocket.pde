@@ -11,7 +11,7 @@ public class projectile{
     sprite = shape;
     xPosition = x;
     yPosition = y;
-    xVelocity = 50;
+    xVelocity = 0;
     yVelocity = 0;
   }
   

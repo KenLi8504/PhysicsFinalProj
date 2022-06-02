@@ -16,7 +16,7 @@ boolean heldDown;
 boolean shipHeld = false;
 boolean goalHeld = false;
 
-float scaleFac = 2000000;
+float scaleFac = 10000000;
 float GConstant = 6.6743e-11;
 
 
@@ -40,14 +40,14 @@ void setup() {
 }
 
 void draw() {
-  print("cool\n");
+  //print("cool\n");
   textSize(20);
   background(0);
   
   if (rocketship != null) {
-    print(rocketship.getX()+"\n");
-    print(rocketship.getY()+"\n");
-    print(rocketship.getImage());
+    //print(rocketship.getX()+"\n");
+    //print(rocketship.getY()+"\n");
+    //print(rocketship.getImage());
     image(rocketship.getImage(),rocketship.getX(),rocketship.getY());
   }
   
@@ -65,6 +65,10 @@ void draw() {
   image(goalImg, target.getX(), target.getY());
   placeInstructions();
   rocketSpawn(rocketship);
+  boolean isAlive = checkRocket(rocketship);
+  if (!isAlive){
+    rocketship = null;
+  }
   rocketCalc(rocketship);
   
   for (planets x : pArray) {
@@ -125,9 +129,9 @@ void rocketSpawn(projectile rocketship) {
   //Rocket stuff
   if (rocketship != null) {
     //Loads the rocket
-    print("Loaded\n");
-    print(rocketship.getX()+"\n");
-    print(rocketship.getY()+"\n");
+    //print("Loaded\n");
+    //print(rocketship.getX()+"\n");
+    //print(rocketship.getY()+"\n");
     image(rocketship.getImage(), rocketship.getX(), rocketship.getY());
     rocketship.xPosition = rocketship.xPosition + rocketship.getXVelocity();
     rocketship.yPosition = rocketship.yPosition + rocketship.getYVelocity();
@@ -140,14 +144,31 @@ void rocketSpawn(projectile rocketship) {
 //Deals with the change in velocity due to gravitational acceleration at each moment
 void rocketCalc (projectile rocketship) {
   if (rocketship != null) {
+    //print("The old X velocity is" + rocketship.getXVelocity() +"\n");
+    //print("The old Y velocity is" + rocketship.getYVelocity() +"\n");
     for (planets x : pArray) {      
       float acceleration [] = forceCalc(x, rocketship.getX(), rocketship.getY());
       rocketship.xVelocity = rocketship.xVelocity+(acceleration[0]/scaleFac);
       rocketship.yVelocity = rocketship.yVelocity+(acceleration[1]/scaleFac);
+      //print("The new X accel is" + acceleration[0] +"\n");
+      //print("The new Y accel is" + acceleration[1] +"\n");
     }
     //print("The new X velocity is" + rocketship.getXVelocity() +"\n");
     //print("The new Y velocity is" + rocketship.getYVelocity() +"\n");
   }
+}
+
+boolean checkRocket(projectile ship){
+  if (ship != null){
+    for (planets p : pArray){
+      if (distanceCalc(p,ship.getX(),ship.getY()) <= p.getRadius()){
+        print("rocket Killed!\n");
+        return false;
+      }
+    }
+    return true;
+  }
+  return false;
 }
 
 boolean hoverCheck() {
