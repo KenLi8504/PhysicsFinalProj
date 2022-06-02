@@ -6,12 +6,13 @@ PImage goalImg;
 PImage winScreen;
 
 projectile rocketship;
-boolean heldDown;
 ArrayList<planets> pArray;
 planets current;
 goal target = new goal();
 
 boolean win = false;
+
+boolean heldDown;
 boolean shipHeld = false;
 boolean goalHeld = false;
 
@@ -63,8 +64,8 @@ void draw() {
   placePlanet();
   image(goalImg, target.getX(), target.getY());
   placeInstructions();
-  //rocketSpawn(rocketship);
-  //rocketCalc(rocketship);
+  rocketSpawn(rocketship);
+  rocketCalc(rocketship);
   
   for (planets x : pArray) {
     if (current != null && x == current) {
@@ -99,7 +100,7 @@ void draw() {
   }
   noTint();
   if (rocketship != null) {
-    winChecker(target, rocketship);
+    //winChecker(target, rocketship);
   }
 
   if (win) {
@@ -110,6 +111,7 @@ void draw() {
   }
 }
 
+<<<<<<< HEAD
 void winChecker(goal a, projectile b) {
   for (int i = (int)a.getX() - 85; i < a.getX() + 85; i++) {
     for (int j = (int)a.getY() - 48; i < a.getY() + 48; j++) {
@@ -121,6 +123,17 @@ void winChecker(goal a, projectile b) {
   }
   win = false;
 }
+=======
+//void winChecker(goal a, projectile b) {
+//  for (int i = (int)a.getX() - 85; i < a.getX() + 85; i++) {
+//    for (int j = (int)a.getY() - 48; i < a.getY() + 48; j++) {
+//      if (Math.pow(i - b.getX() + 25, 2) + Math.pow(j - b.getY() + 25, 2) < 25) {
+//        win = true;
+//      }
+//    }
+//  }
+//}
+>>>>>>> 40a7d20ffff77e60180f3dc5fcff4aef7c211195
 
 void rocketSpawn(projectile rocketship) {
   //Rocket stuff
