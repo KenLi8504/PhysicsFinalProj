@@ -115,9 +115,11 @@ void winChecker(goal a, projectile b) {
     for (int j = (int)a.getY() - 48; i < a.getY() + 48; j++) {
       if (Math.pow(i - b.getX() + 25, 2) + Math.pow(j - b.getY() + 25, 2) < 25) {
         win = true;
+        return;
       }
     }
   }
+  win = false;
 }
 
 void rocketSpawn(projectile rocketship) {
