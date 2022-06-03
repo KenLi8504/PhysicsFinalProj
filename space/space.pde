@@ -133,7 +133,6 @@ void winChecker(goal a, projectile b) {
   win = false;
 }
 
-
 void rocketSpawn(projectile rocketship) {
   //Rocket stuff
   if (rocketship != null) {

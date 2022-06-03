@@ -1,6 +1,8 @@
 public class goal{
   float xCor;
   float yCor;
+  PImage sprite;
+  int radius;
   
   public goal(){
     xCor = 300;
