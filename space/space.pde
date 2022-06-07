@@ -144,8 +144,7 @@ void winChecker(goal a, projectile b) {
     win = true;
   }else{
     win = false;
-  } 
-  
+  }   
 }
 
 void rocketSpawn(projectile rocketship) {
