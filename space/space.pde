@@ -97,6 +97,7 @@ void draw() {
 
   if (keyPressed && key == 'k' && current != null && pArray.contains(current)) {
     pArray.remove(pArray.indexOf(current));
+    fieldDrawer(true);
   }
   if (keyPressed && key == 'r') {
     pArray.clear();
@@ -106,7 +107,6 @@ void draw() {
   }
   noTint();
   if (rocketship != null) {
-    print("Hehe watch this program crash");
     winChecker(target, rocketship);
   }
 
@@ -122,15 +122,12 @@ void draw() {
 
 // check if the rocket is inside the goal
 void winChecker(goal a, projectile b) {
-  for (int i = (int)a.getX() - 85; i < a.getX() + 85; i+= 2) {
-    for (int j = (int)a.getY() - 48; i < a.getY() + 48; j+= 2) {
-      if (Math.pow(i - (int)b.getX() + 25, 2) + Math.pow(j - (int)b.getY() + 25, 2) < 625) {
-        win = true;
-        return;
-      }
-    }
-  }
-  win = false;
+  if(Math.pow(a.getX()- b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2) < 75){
+    win = true;
+  }else{
+    win = false;
+  } 
+  
 }
 
 void rocketSpawn(projectile rocketship) {
