@@ -122,7 +122,7 @@ void draw() {
 
 // check if the rocket is inside the goal
 void winChecker(goal a, projectile b) {
-  if(Math.pow(a.getX()- b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2) < 75){
+  if(Math.pow(a.getX()- b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2) < 5625){
     win = true;
   }else{
     win = false;
