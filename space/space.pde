@@ -34,8 +34,8 @@ void setup() {
   ship = loadImage("rocket.png");
   ship.resize(50, 50);
   background(0);
-  goalImg = loadImage("goal.png");
-  goalImg.resize(170, 96);
+  goalImg = loadImage("newGoal.png");
+  goalImg.resize(100, 100);
   pArray = new ArrayList<planets>();
   fieldDrawer(true);
 }
