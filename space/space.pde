@@ -122,15 +122,7 @@ void draw() {
 
 // check if the rocket is inside the goal
 void winChecker(goal a, projectile b) {
-  for (int i = (int)a.getX() - 85; i < a.getX() + 85; i+= 2) {
-    for (int j = (int)a.getY() - 48; i < a.getY() + 48; j+= 2) {
-      if (Math.pow(i - (int)b.getX() + 25, 2) + Math.pow(j - (int)b.getY() + 25, 2) < 625) {
-        win = true;
-        return;
-      }
-    }
-  }
-  win = false;
+  
 }
 
 void rocketSpawn(projectile rocketship) {
