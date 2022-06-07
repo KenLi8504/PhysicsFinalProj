@@ -10,8 +10,8 @@ public class goal{
   }
   
   public void updateCoordinate(float x, float y){
-    xCor = x - 85;
-    yCor = y - 48;
+    xCor = x - 50;
+    yCor = y - 50;
   }
   
   public float getX(){
@@ -23,7 +23,7 @@ public class goal{
   }
   
   public boolean held(float x, float y){
-    if(x - xCor < 170 && y-yCor < 96){
+    if(x - xCor < 100 && y-yCor < 100){
       return true;
     } 
     return false;

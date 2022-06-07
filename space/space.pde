@@ -34,8 +34,8 @@ void setup() {
   ship = loadImage("rocket.png");
   ship.resize(50, 50);
   background(0);
-  goalImg = loadImage("goal.png");
-  goalImg.resize(170, 96);
+  goalImg = loadImage("newGoal.png");
+  goalImg.resize(100, 100);
   pArray = new ArrayList<planets>();
   fieldDrawer(true);
 }
@@ -97,6 +97,7 @@ void draw() {
 
   if (keyPressed && key == 'k' && current != null && pArray.contains(current)) {
     pArray.remove(pArray.indexOf(current));
+    fieldDrawer(true);
   }
   if (keyPressed && key == 'r') {
     pArray.clear();
@@ -106,7 +107,6 @@ void draw() {
   }
   noTint();
   if (rocketship != null) {
-    print("Hehe watch this program crash");
     winChecker(target, rocketship);
   }
 
@@ -122,7 +122,11 @@ void draw() {
 
 // check if the rocket is inside the goal
 void winChecker(goal a, projectile b) {
-  
+  if(Math.pow(a.getX()- b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2) < 5625){
+    win = true;
+  }else{
+    win = false;
+  }   
 }
 
 void rocketSpawn(projectile rocketship) {
