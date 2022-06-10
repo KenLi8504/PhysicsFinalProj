@@ -17,6 +17,32 @@ public class planets{
     sprite.resize(radius * 2, radius * 2);
   }
   
+  public void increaseMass(){
+    if(mass >= 259 * (float)Math.pow(10,20)){
+      return;
+    }
+    mass += 20 * (float)Math.pow(10,20);
+  }
+  
+  public void increaseRadius(){
+    radius += 10;
+    sprite.resize(radius * 2, radius * 2);
+  }
+  
+  public void decreaseMass(){
+    if(mass <= 40 * (float)Math.pow(10,20)){
+      return;
+    }
+    mass -= 20 * (float)Math.pow(10,20);
+  }
+  
+  public void decreaseRadius(){
+    if(radius <= 30){
+      return;
+    }
+    radius -= 10;
+    sprite.resize(radius * 2, radius * 2);
+  }
   public void updateCoordinate(float x, float y){
     xCor = x;
     yCor = y;

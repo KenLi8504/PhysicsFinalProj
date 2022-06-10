@@ -42,6 +42,23 @@ void setup() {
 }
 
 void draw() {
+  
+  if (keyPressed && current != null && pArray.contains(current) && key == CODED){
+    fieldDrawer(true);
+    if(keyCode == UP){
+      current.increaseMass();
+    }
+    if(keyCode == DOWN){
+      current.decreaseMass();
+    }
+    if(keyCode == LEFT){
+      current.decreaseRadius();
+    }
+    if(keyCode == RIGHT){
+      current.increaseRadius();
+    }
+  }
+  
   textSize(20);
   background(0);
   
@@ -105,6 +122,7 @@ void draw() {
     target.updateCoordinate(300, 300);
     rocketship = null;
   }
+  
   noTint();
   if (rocketship != null) {
     winChecker(target, rocketship);
