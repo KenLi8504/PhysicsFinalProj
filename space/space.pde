@@ -11,6 +11,7 @@ planets current;
 goal target = new goal();
 
 boolean win = false;
+boolean startGame = false;
 
 boolean heldDown;
 boolean shipHeld = false;
@@ -41,16 +42,12 @@ void setup() {
 }
 
 void draw() {
-  //print("cool\n");
   textSize(20);
   background(0);
   
-  if (rocketship != null) {
-    //print(rocketship.getX()+"\n");
-    //print(rocketship.getY()+"\n");
-    //print(rocketship.getImage());
-    image(rocketship.getImage(),rocketship.getX(),rocketship.getY());
-  }
+  //if (rocketship != null) {
+  //  image(rocketship.getImage(),rocketship.getX()-25,rocketship.getY()-25);
+  //}
   
   if (heldDown) {
     if (current != null && (current.getX() != mouseX || current.getY() != mouseY)) {
@@ -63,7 +60,9 @@ void draw() {
   }
 
   placePlanet();
-  image(goalImg, target.getX(), target.getY());
+  
+  image(goalImg, target.getX()-50, target.getY()-50);
+  
   placeInstructions();
   rocketSpawn(rocketship);
   boolean isAlive = checkRocket(rocketship);
@@ -81,17 +80,18 @@ void draw() {
     image(x.getImage(), x.getX()-x.getRadius(), x.getY()-x.getRadius());
 
     text("Mass: " + x.getMass(), x.getX(), x.getY());
-    //print("ok");
   }
   
 
   noTint();
-
+  
   if (heldDown && mouseButton == LEFT) {
-    if (current != null) {
-      current.updateCoordinate(mouseX, mouseY);
+    if (shipHeld && rocketship != null){
+      rocketship.updateCoordinate(mouseX,mouseY);
     } else if (goalHeld) {
       target.updateCoordinate(mouseX, mouseY);
+    }else if (current != null) {
+      current.updateCoordinate(mouseX, mouseY);
     }
   }
 
@@ -133,32 +133,20 @@ void rocketSpawn(projectile rocketship) {
   //Rocket stuff
   if (rocketship != null) {
     //Loads the rocket
-    //print("Loaded\n");
-    //print(rocketship.getX()+"\n");
-    //print(rocketship.getY()+"\n");
-    image(rocketship.getImage(), rocketship.getX(), rocketship.getY());
+    image(rocketship.getImage(), rocketship.getX()-25, rocketship.getY()-25);
     rocketship.xPosition = rocketship.xPosition + rocketship.getXVelocity();
     rocketship.yPosition = rocketship.yPosition + rocketship.getYVelocity();
   }
 }
 
-//print("The X velocity is" + rocketship.getXVelocity() +"\n");
-//print("The Y velocity is" + rocketship.getYVelocity() +"\n");
-
 //Deals with the change in velocity due to gravitational acceleration at each moment
 void rocketCalc (projectile rocketship) {
   if (rocketship != null) {
-    //print("The old X velocity is" + rocketship.getXVelocity() +"\n");
-    //print("The old Y velocity is" + rocketship.getYVelocity() +"\n");
     for (planets x : pArray) {      
       float acceleration [] = forceCalc(x, rocketship.getX(), rocketship.getY());
       rocketship.xVelocity = rocketship.xVelocity+(acceleration[0]/scaleFac);
       rocketship.yVelocity = rocketship.yVelocity+(acceleration[1]/scaleFac);
-      //print("The new X accel is" + acceleration[0] +"\n");
-      //print("The new Y accel is" + acceleration[1] +"\n");
     }
-    //print("The new X velocity is" + rocketship.getXVelocity() +"\n");
-    //print("The new Y velocity is" + rocketship.getYVelocity() +"\n");
   }
 }
 
@@ -170,29 +158,13 @@ boolean checkRocket(projectile ship){
         return false;
       }
     }
+    if (ship.xPosition < 0 || ship.xPosition > 1000 || ship.yPosition < 0 || ship.yPosition > 800){
+      print("Your ship was lost in space\n");
+      return false;
+    }
     return true;
   }
   return false;
-}
-
-boolean hoverCheck() {
-  boolean x = false;
-  current = null;
-  for (planets i : pArray) {
-    if (i.held(mouseX, mouseY)) {
-      current = i;
-      x = true;
-    }
-  }
-  if (target.held(mouseX, mouseY)) {
-    current = null;
-    goalHeld = true;
-    x = true;
-  } else {
-    goalHeld = false;
-  }
-
-  return x;
 }
 
 void placeInstructions() {
@@ -203,22 +175,52 @@ void placeInstructions() {
   text("press r to restart", 0, 125);
 }
 
+boolean hoverCheck() {
+  boolean x = false;
+  current = null;
+  goalHeld = false;
+  shipHeld = false;
+  if (current == null && goalHeld == false && shipHeld == false){
+    print("Everything reset\n");
+  }
+  if(rocketship != null){
+    if(rocketship.held(mouseX,mouseY)){
+      shipHeld = true;
+      //print("holding rocket\n");
+      x = true;
+    }
+  }
+  if (target.held(mouseX, mouseY)) {
+    goalHeld = true;
+    x = true;
+    //print("holding target\n");
+  }
+  else if (!shipHeld && !goalHeld){
+    for (planets i : pArray) {
+      if (i.held(mouseX, mouseY)) {
+        current = i;
+        x = true;
+      }
+    }
+  }
+  return x;
+}
+
 void placePlanet() {
+  //places a new planet
   if (mousePressed && mouseButton == LEFT && !heldDown) {
     if (!hoverCheck()) {
       planets Temp = new planets(planetImg, mouseX, mouseY);
       pArray.add(Temp);
       current = Temp;
       fieldDrawer(true);
-      print("placed planet\n");
     }
     heldDown = true;
   }
-  
+  //places a new rocketship
   if (mousePressed && mouseButton == RIGHT && !heldDown && rocketship == null) {
     if (!hoverCheck()) {
     rocketship = new projectile(ship, mouseX, mouseY);
-    print("placed rocket\n");
     }
     heldDown = true;
   }

@@ -10,8 +10,8 @@ public class goal{
   }
   
   public void updateCoordinate(float x, float y){
-    xCor = x - 50;
-    yCor = y - 50;
+    xCor = x;
+    yCor = y;
   }
   
   public float getX(){
@@ -23,9 +23,7 @@ public class goal{
   }
   
   public boolean held(float x, float y){
-    if(x - xCor < 100 && y-yCor < 100){
-      return true;
-    } 
-    return false;
+   print("holding goal\n");
+   return (Math.sqrt(Math.pow(xCor - x, 2) + Math.pow(yCor - y, 2)) <= 50);
   }
 }

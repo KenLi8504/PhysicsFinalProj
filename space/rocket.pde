@@ -3,6 +3,7 @@ public class projectile{
   float yVelocity;
   float xPosition;
   float yPosition;
+  float radius;
   float angle;
   PImage sprite;
   
@@ -34,4 +35,14 @@ public class projectile{
   public PImage getImage(){
     return sprite;
   }
+  
+  public boolean held(float x, float y){
+    print("holding rocket\n");
+    return (Math.sqrt(Math.pow(xPosition - x, 2) + Math.pow(yPosition - y, 2)) <= 25);
+  }
+  
+  public void updateCoordinate(float x, float y){
+   xPosition = x;
+   yPosition = y;
+ }
 }
