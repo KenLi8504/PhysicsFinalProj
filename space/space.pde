@@ -62,10 +62,6 @@ void draw() {
   textSize(20);
   background(0);
   
-  //if (rocketship != null) {
-  //  image(rocketship.getImage(),rocketship.getX()-25,rocketship.getY()-25);
-  //}
-  
   if (heldDown) {
     if (current != null && (current.getX() != mouseX || current.getY() != mouseY)) {
       fieldDrawer(true);
@@ -77,16 +73,11 @@ void draw() {
   }
 
   placePlanet();
+  rocketSpawn(rocketship);
   
   image(goalImg, target.getX()-50, target.getY()-50);
   
   placeInstructions();
-  rocketSpawn(rocketship);
-  boolean isAlive = checkRocket(rocketship);
-  if (!isAlive){
-    rocketship = null;
-  }
-  rocketCalc(rocketship);
   
   for (planets x : pArray) {
     if (current != null && x == current) {
@@ -123,17 +114,39 @@ void draw() {
     rocketship = null;
   }
   
-  noTint();
-  if (rocketship != null) {
-    winChecker(target, rocketship);
+  if (keyPressed && key == ' ') {
+    startGame = true;
   }
-
-  if (win) {
-    textSize(50);
-    image(winScreen, 0, 0);
-    fill(255, 255, 255);
+  
+  noTint();
+  
+  if (startGame == true){
+    //print("Starting game!\n");
+    boolean isAlive = checkRocket(rocketship);
+    if (!isAlive){
+      rocketship = null;
+    }
+    else{
+    rocketCalc(rocketship);
+    }
+  
+    if (rocketship != null) {
+      winChecker(target, rocketship);
+    }
+  
+    if (win) {
+      textSize(50);
+      image(winScreen, 0, 0);
+      fill(255, 255, 255);
+      rocketship = null;
+      text("You did it!", 400, 400);
+    }
+  }
+  
+  if (keyPressed && key == 'r') {
+    startGame = false;
     rocketship = null;
-    text("You did it!", 400, 400);
+    //print("Ending game!\n");
   }
 }
 
@@ -187,10 +200,10 @@ boolean checkRocket(projectile ship){
 
 void placeInstructions() {
   fill(color(255, 0, 0));
-  text("left click to place planet", 0, 50);
-  text("press k to kill selected planet", 0, 75);
-  text("press space to start", 0, 100);
-  text("press r to restart", 0, 125);
+  text("left click to place a planet", 0, 50);
+  text("press k to get rid of the selected planet", 0, 75);
+  text("press space to start the simulation", 0, 100);
+  text("press r to clear everything and restart", 0, 125);
 }
 
 boolean hoverCheck() {
