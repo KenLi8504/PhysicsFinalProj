@@ -1,9 +1,9 @@
 //All necessary PImages
-PImage planetImg;
 PImage ship;
 PImage goal;
 PImage goalImg;
 PImage winScreen;
+ArrayList<PImage> planetImgs;
 
 projectile rocketship;
 ArrayList<planets> pArray;
@@ -25,13 +25,13 @@ float[][][] currentForce= new float[250][200][2];
 boolean changed = false;
 
 void setup() {
+  planetImgs = new ArrayList<PImage>();
   heldDown = false;
   textSize(20);
   size(1000, 800);
   winScreen = loadImage("amogus.jpg");
   winScreen.resize(1000, 800);
-  planetImg = loadImage("planet.png");
-  planetImg.resize(100, 100);
+
   ship = loadImage("rocket.png");
   ship.resize(50, 50);
   background(0);
@@ -241,7 +241,8 @@ void placePlanet() {
   //places a new planet
   if (mousePressed && mouseButton == LEFT && !heldDown) {
     if (!hoverCheck()) {
-      planets Temp = new planets(planetImg, mouseX, mouseY);
+      planetImgs.add(loadImage("planet.png"));
+      planets Temp = new planets(planetImgs.get(planetImgs.size() - 1), mouseX, mouseY);
       pArray.add(Temp);
       current = Temp;
       fieldDrawer(true);
