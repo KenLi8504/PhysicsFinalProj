@@ -15,12 +15,14 @@ goal target = new goal();
 boolean win = false;
 boolean startGame = false;
 boolean fired = false;
+float prevVelocity = 0;
+float prevAngle = 0;
 
 boolean heldDown;
 boolean shipHeld = false;
 boolean goalHeld = false;
 
-float scaleFac = 10000000;
+float scaleFac = 50000000;
 float GConstant = 6.6743e-11;
 
 
@@ -67,6 +69,17 @@ void draw() {
     placeInstructions();
     placePlanet();
     if (heldDown) {
+        for (planets x : pArray) {
+    if (current != null && x == current) {
+      tint(0, 153, 204);
+    } else {
+      noTint();
+    }
+    image(x.getImage(), x.getX()-x.getRadius(), x.getY()-x.getRadius());
+
+    text("Mass: " + x.getMass(), x.getX(), x.getY());
+  }
+  noTint();
       if (current != null && (current.getX() != mouseX || current.getY() != mouseY)) {
         fieldDrawer(true);
        } else {
@@ -118,17 +131,32 @@ void draw() {
   }
   
   if (startGame == true){
-    
+    placeHowtoPlay();
     //print("Starting game!\n");
     boolean isAlive = checkRocket(rocketship);
-    if (!isAlive){
-      rocketship = new projectile(ship,initialX,initialY);
+    if (!isAlive && fired){
+      rocketship = new projectile(ship,initialX,initialY,prevAngle,prevVelocity);
       fired = false;
       print("Spawned a new rocket\n");
     }
     else{
       if (fired){
-      rocketCalc(rocketship);
+        rocketCalc(rocketship);
+      }
+    }
+    
+    if (keyPressed && key == CODED && rocketship != null && !fired){
+      if(keyCode == UP){
+        rocketship.incVelocity();
+      }
+      if(keyCode == DOWN){
+        rocketship.decVelocity();
+      }
+      if(keyCode == LEFT){
+        rocketship.incAngle();
+      }
+      if(keyCode == RIGHT){
+        rocketship.decAngle();
       }
     }
   
@@ -140,10 +168,14 @@ void draw() {
       textSize(50);
       image(winScreen, 0, 0);
       fill(255, 255, 255);
+      fired = false;
       rocketship = null;
-      text("You did it!", 400, 400);
+      text("You did it!", 360, 400);
+      text("Press t to go back", 290, 450);
+        if (keyPressed && key == 't'){
+          fired = true;
+        }
     }
-  }
   
   if (keyPressed && key == 'e') {
     startGame = false;
@@ -151,8 +183,13 @@ void draw() {
   }
   
   if (keyPressed && key == 'f') {
+    prevVelocity = rocketship.totalVelocity;
+    prevAngle = rocketship.angle;
+    rocketship.xVelocity = rocketship.totalVelocity * cos(radians(rocketship.angle));
+    rocketship.yVelocity  = rocketship.totalVelocity * sin(radians(rocketship.angle));
     fired = true;
   }
+ }
 }
 
 
@@ -209,6 +246,14 @@ void placeInstructions() {
   text("press k to get rid of the selected planet", 0, 75);
   text("press space to start the simulation", 0, 100);
   text("press r to clear everything and restart", 0, 125);
+}
+
+void placeHowtoPlay() {
+  fill(color(255, 0, 0));
+  //text("left click to place a planet", 0, 50);
+  text("press e to end the game and return to the sandbox", 0, 75);
+  text("press f to fire the rocket", 0, 100);
+  text("Use arrow keys to adjust the angle and velocity", 0, 125);
 }
 
 boolean hoverCheck() {

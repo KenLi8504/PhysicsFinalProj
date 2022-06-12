@@ -1,4 +1,5 @@
 public class projectile{
+  float totalVelocity;
   float xVelocity;
   float yVelocity;
   float xPosition;
@@ -10,10 +11,22 @@ public class projectile{
   
   public projectile(PImage shape, float x, float y){
     sprite = shape;
+    angle = 0;
     xPosition = x;
     yPosition = y;
     xVelocity = 0;
     yVelocity = 0;
+  }
+  
+  public projectile(PImage shape, float x, float y,float givenAngle, float givenVelocity){
+    sprite = shape;
+    angle = 0;
+    xPosition = x;
+    yPosition = y;
+    xVelocity = 0;
+    yVelocity = 0;
+    angle = givenAngle;
+    totalVelocity = givenVelocity;
   }
   
   public float getX(){
@@ -45,4 +58,25 @@ public class projectile{
    xPosition = x;
    yPosition = y;
  }
+ 
+ public void incVelocity(){
+  if(totalVelocity >= 1000){
+    return;
+  }
+  totalVelocity = totalVelocity + 10;
+}
+public void decVelocity(){
+  if(totalVelocity <= 0){
+    return;
+  }
+  totalVelocity = totalVelocity - 10;
+}
+
+public void incAngle(){
+  angle = angle + 5;
+}
+
+public void decAngle(){
+  angle = angle -5;
+}
 }
