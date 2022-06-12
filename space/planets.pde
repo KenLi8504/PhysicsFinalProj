@@ -25,6 +25,9 @@ public class planets{
   }
   
   public void increaseRadius(){
+    if (radius >= 100){
+      return;
+    }
     radius += 10;
     sprite.resize(radius * 2, radius * 2);
   }
@@ -58,7 +61,6 @@ public class planets{
     return sprite;
   }
   public boolean held(float x, float y){
-    print("holding a planet\n");
     return (Math.sqrt(Math.pow(xCor - x, 2) + Math.pow(yCor - y, 2)) <= radius);
   }
   

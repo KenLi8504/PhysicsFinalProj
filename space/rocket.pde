@@ -50,7 +50,6 @@ public class projectile{
   }
   
   public boolean held(float x, float y){
-    print("holding rocket\n");
     return (Math.sqrt(Math.pow(xPosition - x, 2) + Math.pow(yPosition - y, 2)) <= 25);
   }
   

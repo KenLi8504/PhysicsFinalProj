@@ -65,7 +65,8 @@ void draw() {
     }
     image(x.getImage(), x.getX()-x.getRadius(), x.getY()-x.getRadius());
 
-    text("Mass: " + x.getMass(), x.getX(), x.getY());
+    text("Mass: " + x.getMass(), x.getX(), x.getY()-5);
+    text("Radius: " + x.getRadius(), x.getX(), x.getY()+15);
   }
   noTint();
   
@@ -109,8 +110,10 @@ void draw() {
       noTint();
     }
     image(x.getImage(), x.getX()-x.getRadius(), x.getY()-x.getRadius());
-
-    text("Mass: " + x.getMass(), x.getX(), x.getY());
+    
+    fill(0);
+    text("Mass: " + x.getMass(), x.getX(), x.getY()-5);
+    text("Radius: " + x.getRadius(), x.getX(), x.getY()+15);
   }
   noTint();
       
@@ -148,12 +151,10 @@ void draw() {
   
   if (startGame == true){
     placeHowtoPlay();
-    //print("Starting game!\n");
     boolean isAlive = checkRocket(rocketship);
     if (!isAlive && fired){
       rocketship = new projectile(ship,initialX,initialY,prevAngle,prevVelocity);
       fired = false;
-      print("Spawned a new rocket\n");
     }
     else{
       if (fired){
@@ -166,7 +167,6 @@ void draw() {
       translate(rocketship.getX(),rocketship.getY()-5);
       rotate(radians(rocketship.angle));
       image(velocityVector,0,0);
-      //print("rotated the velocity vector by" + rocketship.angle + "degrees \n");
       popMatrix();
     }
     
@@ -174,13 +174,13 @@ void draw() {
       pushMatrix();
       translate(rocketship.getX(),rocketship.getY()-5);
       if (rocketship.xVelocity >= 0){
-        rotate((atan(rocketship.xVelocity/rocketship.yVelocity) ));
+        rotate((atan(rocketship.yVelocity/rocketship.xVelocity)));
+        print(" the degree is " + degrees(atan(rocketship.yVelocity/rocketship.xVelocity)) + "\n");
       }
       else{
-        rotate( (atan(rocketship.xVelocity/rocketship.yVelocity) ) + PI);
+        rotate(((atan(rocketship.yVelocity/rocketship.xVelocity) )) + PI );
       }
       image(velocityVector,0,0);
-      print("rotated the velocity vector by" + atan(rocketship.xVelocity/rocketship.yVelocity) + "degrees \n");
       popMatrix();
     }
     
@@ -221,9 +221,11 @@ void draw() {
     rocketship = null;
   }
   
-  if (keyPressed && key == 'f') {
+  if (keyPressed && key == 'f' && !fired) {
     prevVelocity = rocketship.totalVelocity;
     prevAngle = rocketship.angle;
+    print("the previous velocity was" + prevVelocity + "\n");
+    
     rocketship.xVelocity = rocketship.totalVelocity * cos(radians(rocketship.angle));
     rocketship.yVelocity  = rocketship.totalVelocity * sin(radians(rocketship.angle));
     fired = true;
@@ -253,6 +255,9 @@ void rocketSpawn(projectile rocketship) {
     image(rocketship.getImage(), rocketship.getX()-25, rocketship.getY()-25);
     rocketship.xPosition = rocketship.xPosition + rocketship.getXVelocity();
     rocketship.yPosition = rocketship.yPosition + rocketship.getYVelocity();
+    fill(255,0,0);
+    text("Total Velocity: " + rocketship.totalVelocity, rocketship.getX(), rocketship.getY()-5);
+    text("Angle: " + rocketship.angle%360, rocketship.getX(), rocketship.getY()+15);
   }
 }
 
@@ -264,6 +269,13 @@ void rocketCalc (projectile rocketship) {
       rocketship.xVelocity = rocketship.xVelocity+(acceleration[0]/scaleFac);
       rocketship.yVelocity = rocketship.yVelocity+(acceleration[1]/scaleFac);
     }
+    rocketship.totalVelocity = (float)Math.sqrt(rocketship.xVelocity * rocketship.xVelocity + rocketship.yVelocity * rocketship.yVelocity);
+    if (rocketship.xVelocity >= 0){
+      rocketship.angle = (degrees(atan(rocketship.yVelocity/rocketship.xVelocity) ));
+    }
+    else{
+      rocketship.angle = degrees((atan(rocketship.yVelocity/rocketship.xVelocity) + PI));
+    }
   }
 }
 
@@ -271,12 +283,10 @@ boolean checkRocket(projectile ship){
   if (ship != null){
     for (planets p : pArray){
       if (distanceCalc(p,ship.getX(),ship.getY()) <= p.getRadius()){
-        print("rocket Killed!\n");
         return false;
       }
     }
     if (ship.xPosition < 0 || ship.xPosition > 1000 || ship.yPosition < 0 || ship.yPosition > 800){
-      print("Your ship was lost in space\n");
       return false;
     }
     return true;
@@ -306,19 +316,16 @@ boolean hoverCheck() {
   goalHeld = false;
   shipHeld = false;
   if (current == null && goalHeld == false && shipHeld == false){
-    print("Everything reset\n");
   }
   if(rocketship != null){
     if(rocketship.held(mouseX,mouseY)){
       shipHeld = true;
-      //print("holding rocket\n");
       x = true;
     }
   }
   if (target.held(mouseX, mouseY)) {
     goalHeld = true;
     x = true;
-    //print("holding target\n");
   }
   else if (!shipHeld && !goalHeld){
     for (planets i : pArray) {

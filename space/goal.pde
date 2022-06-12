@@ -23,7 +23,6 @@ public class goal{
   }
   
   public boolean held(float x, float y){
-   print("holding goal\n");
    return (Math.sqrt(Math.pow(xCor - x, 2) + Math.pow(yCor - y, 2)) <= 50);
   }
 }
