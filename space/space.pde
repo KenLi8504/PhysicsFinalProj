@@ -1,6 +1,7 @@
 //All necessary PImages
 PImage ship;
 PImage goal;
+PImage boom;
 PImage goalImg;
 PImage winScreen;
 PImage velocityVector;
@@ -40,6 +41,8 @@ void setup() {
 
   ship = loadImage("rocket.png");
   ship.resize(50, 50);
+  boom = loadImage("boom.jpg");
+  boom.resize(100,100);
   background(0);
   goalImg = loadImage("newGoal.png");
   goalImg.resize(100, 100);
@@ -53,7 +56,6 @@ void draw() {
   textSize(20);
   background(0);
   fieldDrawer(false);
-
   rocketSpawn(rocketship);
   //image(velocityVector,100, 100);
   image(goalImg, target.getX()-50, target.getY()-50);
@@ -175,7 +177,7 @@ void draw() {
       translate(rocketship.getX(),rocketship.getY()-5);
       if (rocketship.xVelocity >= 0){
         rotate((atan(rocketship.yVelocity/rocketship.xVelocity)));
-        print(" the degree is " + degrees(atan(rocketship.yVelocity/rocketship.xVelocity)) + "\n");
+        //print(" the degree is " + degrees(atan(rocketship.yVelocity/rocketship.xVelocity)) + "\n");
       }
       else{
         rotate(((atan(rocketship.yVelocity/rocketship.xVelocity) )) + PI );
@@ -219,6 +221,11 @@ void draw() {
   if (keyPressed && key == 'e') {
     startGame = false;
     rocketship = null;
+  }
+  
+  if (keyPressed && key == 'r') {
+    rocketship = new projectile(ship,initialX,initialY,prevAngle,prevVelocity);
+    fired = false;
   }
   
   if (keyPressed && key == 'f' && !fired) {
@@ -300,14 +307,15 @@ void placeInstructions() {
   text("press k to get rid of the selected planet", 0, 75);
   text("press space to start the simulation", 0, 100);
   text("press r to clear everything and restart", 0, 125);
+  text("use arrow keys to adjust the mass & radius of the planets", 0, 150);
 }
 
 void placeHowtoPlay() {
   fill(color(255, 0, 0));
-  //text("left click to place a planet", 0, 50);
-  text("press e to end the game and return to the sandbox", 0, 75);
-  text("press f to fire the rocket", 0, 100);
-  text("Use arrow keys to adjust the angle and velocity", 0, 125);
+  text("press r to end one run and select a new angle/velocity", 0, 100);
+  text("press e to end the game and return to the sandbox", 0, 125);
+  text("press f to fire the rocket", 0, 75);
+  text("Use arrow keys to adjust the angle and velocity", 0, 50);
 }
 
 boolean hoverCheck() {
