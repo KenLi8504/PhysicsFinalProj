@@ -42,43 +42,12 @@ void setup() {
 }
 
 void draw() {
-  
-  if (keyPressed && current != null && pArray.contains(current) && key == CODED){
-    fieldDrawer(true);
-    if(keyCode == UP){
-      current.increaseMass();
-    }
-    if(keyCode == DOWN){
-      current.decreaseMass();
-    }
-    if(keyCode == LEFT){
-      current.decreaseRadius();
-    }
-    if(keyCode == RIGHT){
-      current.increaseRadius();
-    }
-  }
-  
   textSize(20);
   background(0);
-  
-  if (heldDown) {
-    if (current != null && (current.getX() != mouseX || current.getY() != mouseY)) {
-      fieldDrawer(true);
-    } else {
-      fieldDrawer(false);
-    }
-  } else {
-    fieldDrawer(false);
-  }
+  fieldDrawer(false);
 
-  placePlanet();
   rocketSpawn(rocketship);
-  
   image(goalImg, target.getX()-50, target.getY()-50);
-  
-  placeInstructions();
-  
   for (planets x : pArray) {
     if (current != null && x == current) {
       tint(0, 153, 204);
@@ -89,36 +58,59 @@ void draw() {
 
     text("Mass: " + x.getMass(), x.getX(), x.getY());
   }
-  
-
   noTint();
   
-  if (heldDown && mouseButton == LEFT) {
-    if (shipHeld && rocketship != null){
-      rocketship.updateCoordinate(mouseX,mouseY);
-    } else if (goalHeld) {
-      target.updateCoordinate(mouseX, mouseY);
-    }else if (current != null) {
-      current.updateCoordinate(mouseX, mouseY);
+  if(startGame == false){
+    placeInstructions();
+    placePlanet();
+    if (heldDown) {
+      if (current != null && (current.getX() != mouseX || current.getY() != mouseY)) {
+        fieldDrawer(true);
+       } else {
+        fieldDrawer(false);
+      }
     }
-  }
-
-  if (keyPressed && key == 'k' && current != null && pArray.contains(current)) {
-    pArray.remove(pArray.indexOf(current));
-    fieldDrawer(true);
-  }
-  if (keyPressed && key == 'r') {
-    pArray.clear();
-    win = false;
-    target.updateCoordinate(300, 300);
-    rocketship = null;
-  }
+    
+    if (keyPressed && current != null && pArray.contains(current) && key == CODED){
+      fieldDrawer(true);
+      if(keyCode == UP){
+        current.increaseMass();
+      }
+      if(keyCode == DOWN){
+        current.decreaseMass();
+      }
+      if(keyCode == LEFT){
+        current.decreaseRadius();
+      }
+      if(keyCode == RIGHT){
+        current.increaseRadius();
+      }
+    }
+    if (heldDown && mouseButton == LEFT) {
+      if (shipHeld && rocketship != null){
+        rocketship.updateCoordinate(mouseX,mouseY);
+      } else if (goalHeld) {
+        target.updateCoordinate(mouseX, mouseY);
+      }else if (current != null) {
+        current.updateCoordinate(mouseX, mouseY);
+      }
+    }
+      
+    if (keyPressed && key == 'k' && current != null && pArray.contains(current)) {
+      pArray.remove(pArray.indexOf(current));
+      fieldDrawer(true);
+    }
+    if (keyPressed && key == 'r') {
+      pArray.clear();
+      win = false;
+      target.updateCoordinate(300, 300);
+      rocketship = null;
+    }
   
-  if (keyPressed && key == ' ') {
-    startGame = true;
+    if (keyPressed && key == ' ') {
+      startGame = true;
+    }  
   }
-  
-  noTint();
   
   if (startGame == true){
     //print("Starting game!\n");
@@ -143,10 +135,9 @@ void draw() {
     }
   }
   
-  if (keyPressed && key == 'r') {
+  if (keyPressed && key == 'e') {
     startGame = false;
     rocketship = null;
-    //print("Ending game!\n");
   }
 }
 
