@@ -44,7 +44,7 @@ void setup() {
   goalImg = loadImage("newGoal.png");
   goalImg.resize(100, 100);
   velocityVector = loadImage("arrow.png");
-  velocityVector.resize(60,20);
+  velocityVector.resize(60,10);
   pArray = new ArrayList<planets>();
   fieldDrawer(true);
 }
@@ -161,12 +161,26 @@ void draw() {
       }
     }
     
-    if (rocketship != null){
+    if (rocketship != null && !fired){
       pushMatrix();
-      translate(rocketship.getX(),rocketship.getY());
+      translate(rocketship.getX(),rocketship.getY()-5);
       rotate(radians(rocketship.angle));
       image(velocityVector,0,0);
-      print("rotated the velocity vector by" + rocketship.angle + "degrees \n");
+      //print("rotated the velocity vector by" + rocketship.angle + "degrees \n");
+      popMatrix();
+    }
+    
+    if (rocketship != null && fired){
+      pushMatrix();
+      translate(rocketship.getX(),rocketship.getY()-5);
+      if (rocketship.xVelocity >= 0){
+        rotate((atan(rocketship.xVelocity/rocketship.yVelocity) ));
+      }
+      else{
+        rotate( (atan(rocketship.xVelocity/rocketship.yVelocity) ) + PI);
+      }
+      image(velocityVector,0,0);
+      print("rotated the velocity vector by" + atan(rocketship.xVelocity/rocketship.yVelocity) + "degrees \n");
       popMatrix();
     }
     
