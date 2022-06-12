@@ -59,10 +59,10 @@ public class projectile{
  }
  
  public void incVelocity(){
-  if(totalVelocity >= 1000){
+  if(totalVelocity >= 100){
     return;
   }
-  totalVelocity = totalVelocity + 10;
+  totalVelocity = totalVelocity + 5;
 }
 public void decVelocity(){
   if(totalVelocity <= 0){

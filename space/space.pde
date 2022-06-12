@@ -24,7 +24,7 @@ boolean heldDown;
 boolean shipHeld = false;
 boolean goalHeld = false;
 
-float scaleFac = 30000000;
+float scaleFac = 50000000;
 float GConstant = 6.6743e-11;
 
 
@@ -220,7 +220,6 @@ void draw() {
   
   if (keyPressed && key == 'e') {
     startGame = false;
-    rocketship = null;
   }
   
   if (keyPressed && key == 'r') {
@@ -231,7 +230,7 @@ void draw() {
   if (keyPressed && key == 'f' && !fired) {
     prevVelocity = rocketship.totalVelocity;
     prevAngle = rocketship.angle;
-    print("the previous velocity was" + prevVelocity + "\n");
+    //print("the previous velocity was" + prevVelocity + "\n");
     
     rocketship.xVelocity = rocketship.totalVelocity * cos(radians(rocketship.angle));
     rocketship.yVelocity  = rocketship.totalVelocity * sin(radians(rocketship.angle));
