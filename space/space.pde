@@ -3,6 +3,7 @@ PImage ship;
 PImage goal;
 PImage goalImg;
 PImage winScreen;
+PImage velocityVector;
 ArrayList<PImage> planetImgs;
 
 projectile rocketship;
@@ -22,7 +23,7 @@ boolean heldDown;
 boolean shipHeld = false;
 boolean goalHeld = false;
 
-float scaleFac = 50000000;
+float scaleFac = 30000000;
 float GConstant = 6.6743e-11;
 
 
@@ -42,6 +43,8 @@ void setup() {
   background(0);
   goalImg = loadImage("newGoal.png");
   goalImg.resize(100, 100);
+  velocityVector = loadImage("arrow.png");
+  velocityVector.resize(60,20);
   pArray = new ArrayList<planets>();
   fieldDrawer(true);
 }
@@ -52,6 +55,7 @@ void draw() {
   fieldDrawer(false);
 
   rocketSpawn(rocketship);
+  //image(velocityVector,100, 100);
   image(goalImg, target.getX()-50, target.getY()-50);
   for (planets x : pArray) {
     if (current != null && x == current) {
@@ -69,17 +73,6 @@ void draw() {
     placeInstructions();
     placePlanet();
     if (heldDown) {
-        for (planets x : pArray) {
-    if (current != null && x == current) {
-      tint(0, 153, 204);
-    } else {
-      noTint();
-    }
-    image(x.getImage(), x.getX()-x.getRadius(), x.getY()-x.getRadius());
-
-    text("Mass: " + x.getMass(), x.getX(), x.getY());
-  }
-  noTint();
       if (current != null && (current.getX() != mouseX || current.getY() != mouseY)) {
         fieldDrawer(true);
        } else {
@@ -103,6 +96,24 @@ void draw() {
       }
     }
     if (heldDown && mouseButton == LEFT) {
+      
+      placeInstructions();
+      
+        rocketSpawn(rocketship);
+  image(goalImg, target.getX()-50, target.getY()-50);
+      
+        for (planets x : pArray) {
+    if (current != null && x == current) {
+      tint(0, 153, 204);
+    } else {
+      noTint();
+    }
+    image(x.getImage(), x.getX()-x.getRadius(), x.getY()-x.getRadius());
+
+    text("Mass: " + x.getMass(), x.getX(), x.getY());
+  }
+  noTint();
+      
       if (shipHeld && rocketship != null){
         rocketship.updateCoordinate(mouseX,mouseY);
       } else if (goalHeld) {
@@ -130,6 +141,11 @@ void draw() {
     }  
   }
   
+  
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////Start of the game//////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
   if (startGame == true){
     placeHowtoPlay();
     //print("Starting game!\n");
@@ -143,6 +159,15 @@ void draw() {
       if (fired){
         rocketCalc(rocketship);
       }
+    }
+    
+    if (rocketship != null){
+      pushMatrix();
+      translate(rocketship.getX(),rocketship.getY());
+      rotate(radians(rocketship.angle));
+      image(velocityVector,0,0);
+      print("rotated the velocity vector by" + rocketship.angle + "degrees \n");
+      popMatrix();
     }
     
     if (keyPressed && key == CODED && rocketship != null && !fired){
@@ -191,6 +216,11 @@ void draw() {
   }
  }
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////All the special functions///////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 
 // check if the rocket is inside the goal

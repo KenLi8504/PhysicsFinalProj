@@ -73,10 +73,10 @@ public void decVelocity(){
 }
 
 public void incAngle(){
-  angle = angle + 5;
+  angle = angle - 5;
 }
 
 public void decAngle(){
-  angle = angle -5;
+  angle = angle + 5;
 }
 }
