@@ -6,12 +6,15 @@ PImage winScreen;
 ArrayList<PImage> planetImgs;
 
 projectile rocketship;
+float initialX;
+float initialY;
 ArrayList<planets> pArray;
 planets current;
 goal target = new goal();
 
 boolean win = false;
 boolean startGame = false;
+boolean fired = false;
 
 boolean heldDown;
 boolean shipHeld = false;
@@ -107,19 +110,26 @@ void draw() {
       rocketship = null;
     }
   
-    if (keyPressed && key == ' ') {
+    if (keyPressed && key == ' ' && rocketship != null) {
       startGame = true;
+      initialX = rocketship.getX();
+      initialY = rocketship.getY();
     }  
   }
   
   if (startGame == true){
+    
     //print("Starting game!\n");
     boolean isAlive = checkRocket(rocketship);
     if (!isAlive){
-      rocketship = null;
+      rocketship = new projectile(ship,initialX,initialY);
+      fired = false;
+      print("Spawned a new rocket\n");
     }
     else{
-    rocketCalc(rocketship);
+      if (fired){
+      rocketCalc(rocketship);
+      }
     }
   
     if (rocketship != null) {
@@ -138,6 +148,10 @@ void draw() {
   if (keyPressed && key == 'e') {
     startGame = false;
     rocketship = null;
+  }
+  
+  if (keyPressed && key == 'f') {
+    fired = true;
   }
 }
 
