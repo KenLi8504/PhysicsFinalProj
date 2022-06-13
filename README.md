@@ -1,8 +1,8 @@
-# PhysicsFinalProj\
+# PhysicsFinalProj
 By Alex Cho and Ken Li\
 Our final project is a simulation of a projectile in space that is affected by the gravitational acceleration of planets. It consists of two phases: a sandbox phase, where you can place planets and move them, the goal, and the projectile/rocketship, and a gameplay phase, where everything is locked in and you can only adjust the angle and initial speed of the projectile. To run the program, just clone it and run it with processing.
 
-#Sandbox phase
+#Sandbox phase\
 We've spawned in the goal right away.\
 To spawn in planets, you left click on an empty part of the canvas.\
 The left and right arrows adjust the radius of the selected planet\
