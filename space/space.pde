@@ -5,6 +5,7 @@ PImage boom;
 PImage goalImg;
 PImage winScreen;
 PImage velocityVector;
+PImage dashline;
 ArrayList<PImage> planetImgs;
 
 projectile rocketship;
@@ -19,6 +20,8 @@ boolean startGame = false;
 boolean fired = false;
 float prevVelocity = 0;
 float prevAngle = 0;
+
+ArrayList <planets> path;
 
 boolean heldDown;
 boolean shipHeld = false;
@@ -48,6 +51,9 @@ void setup() {
   goalImg.resize(100, 100);
   velocityVector = loadImage("arrow.png");
   velocityVector.resize(60,10);
+  dashline = loadImage("dashline.jpg");
+  dashline.resize(40,20);
+  path = new ArrayList<planets>();
   pArray = new ArrayList<planets>();
   fieldDrawer(true);
 }
@@ -57,7 +63,6 @@ void draw() {
   background(0);
   fieldDrawer(false);
   rocketSpawn(rocketship);
-  //image(velocityVector,100, 100);
   image(goalImg, target.getX()-50, target.getY()-50);
   for (planets x : pArray) {
     if (current != null && x == current) {
@@ -125,6 +130,7 @@ void draw() {
         target.updateCoordinate(mouseX, mouseY);
       }else if (current != null) {
         current.updateCoordinate(mouseX, mouseY);
+        
       }
     }
       
@@ -161,7 +167,14 @@ void draw() {
     else{
       if (fired){
         rocketCalc(rocketship);
+        createPath(rocketship);
       }
+    }
+    
+    if(path.size() > 0){
+    for (planets x : path) {
+    image(x.getImage(), x.getX()-x.getRadius(), x.getY()-x.getRadius());
+    }
     }
     
     if (rocketship != null && !fired){
@@ -228,6 +241,7 @@ void draw() {
   }
   
   if (keyPressed && key == 'f' && !fired) {
+    path.clear();
     prevVelocity = rocketship.totalVelocity;
     prevAngle = rocketship.angle;
     //print("the previous velocity was" + prevVelocity + "\n");
@@ -245,6 +259,10 @@ void draw() {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
+void createPath(projectile ship){
+    planets Temp = new planets(loadImage("planet.png"), ship.xPosition, ship.yPosition,0);
+    path.add(Temp);
+}
 // check if the rocket is inside the goal
 void winChecker(goal a, projectile b) {
   if(Math.pow(a.getX()- b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2) < 5625){
@@ -261,6 +279,7 @@ void rocketSpawn(projectile rocketship) {
     image(rocketship.getImage(), rocketship.getX()-25, rocketship.getY()-25);
     rocketship.xPosition = rocketship.xPosition + rocketship.getXVelocity();
     rocketship.yPosition = rocketship.yPosition + rocketship.getYVelocity();
+      
     fill(255,0,0);
     text("Total Velocity: " + rocketship.totalVelocity, rocketship.getX(), rocketship.getY()-5);
     text("Angle: " + rocketship.angle%360, rocketship.getX(), rocketship.getY()+15);
@@ -361,6 +380,7 @@ void placePlanet() {
   if (mousePressed && mouseButton == RIGHT && !heldDown && rocketship == null) {
     if (!hoverCheck()) {
     rocketship = new projectile(ship, mouseX, mouseY);
+    noTint();
     }
     heldDown = true;
   }

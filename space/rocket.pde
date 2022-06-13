@@ -68,7 +68,7 @@ public void decVelocity(){
   if(totalVelocity <= 0){
     return;
   }
-  totalVelocity = totalVelocity - 10;
+  totalVelocity = totalVelocity - 5;
 }
 
 public void incAngle(){

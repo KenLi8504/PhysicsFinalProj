@@ -17,6 +17,15 @@ public class planets{
     sprite.resize(radius * 2, radius * 2);
   }
   
+  public planets(PImage shape, float x, float y, float givenMass){
+    mass = 0 * givenMass;
+    radius = 10;
+    xCor = x;
+    yCor = y;
+    sprite = shape;
+    sprite.resize(radius * 2, radius * 2);
+  }
+  
   public void increaseMass(){
     if(mass >= 259 * (float)Math.pow(10,20)){
       return;
@@ -61,7 +70,7 @@ public class planets{
     return sprite;
   }
   public boolean held(float x, float y){
-    return (Math.sqrt(Math.pow(xCor - x, 2) + Math.pow(yCor - y, 2)) <= radius);
+    return (Math.sqrt(Math.pow(xCor - x, 2) + Math.pow(yCor - y, 2)) < radius);
   }
   
   public float getMass(){
