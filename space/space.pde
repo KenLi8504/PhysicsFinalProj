@@ -106,8 +106,9 @@ void draw() {
     if (heldDown && mouseButton == LEFT) {
       
       placeInstructions();
-      
+      noTint();
         rocketSpawn(rocketship);
+        noTint();
   image(goalImg, target.getX()-50, target.getY()-50);
       
         for (planets x : pArray) {
@@ -283,6 +284,7 @@ void rocketSpawn(projectile rocketship) {
     fill(255,0,0);
     text("Total Velocity: " + rocketship.totalVelocity, rocketship.getX(), rocketship.getY()-5);
     text("Angle: " + rocketship.angle%360, rocketship.getX(), rocketship.getY()+15);
+    fill(0,0,0);
   }
 }
 
