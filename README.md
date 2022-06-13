@@ -1,5 +1,5 @@
-# PhysicsFinalProj
-By Alex Cho and Ken Li
+# PhysicsFinalProj\
+By Alex Cho and Ken Li\
 Our final project is a simulation of a projectile in space that is affected by the gravitational acceleration of planets. It consists of two phases: a sandbox phase, where you can place planets and move them, the goal, and the projectile/rocketship, and a gameplay phase, where everything is locked in and you can only adjust the angle and initial speed of the projectile. To run the program, just clone it and run it with processing.
 
 #Sandbox phase
@@ -19,6 +19,7 @@ Left and right arrows now adjust the angle the projectile will travel at when la
 Up and down adjust the starting speed\
 There is a velocity vector that indicates direction centered at the projectile\
 "f" will fire the rocket\
+  during movement, the rocket will leave a trail of circles behind it, to help the user better estimate any future paths; this trail will be cleared after the next time the user fires\
   Should the rocket crash into a planet or go out of bounds, it will be reset to the its initial starting position (where you locked it in)\
 "r" sends the rocket back to the initial starting position (if you know for sure you are going to crash, or if you get stuck in a loop)\
 "e" transitions back to the sandbox stage\
